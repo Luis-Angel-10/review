@@ -4,6 +4,7 @@ import websiters.review.dto.*;
 import websiters.review.model.*;
 
 import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 import java.util.Optional;
 
 public final class Mappers {
@@ -32,7 +33,7 @@ public final class Mappers {
                 .hasAudio(entity.isHasAudio())
                 .hasImage(entity.isHasImage())
                 .publishedAt(entity.getPublishedAt() != null
-                        ? OffsetDateTime.from(entity.getPublishedAt())
+                        ? OffsetDateTime.of(entity.getPublishedAt(), ZoneOffset.UTC)
                         : null)
                 .build();
     }
@@ -40,7 +41,7 @@ public final class Mappers {
     // ---------- REVIEW IMAGE ----------
     public static ReviewImage toEntity(ReviewImageRequest dto, Review review) {
         return ReviewImage.builder()
-                .review(review)         // <--- CORRECTO: objeto Review, no UUID
+                .review(review) // objeto review
                 .url(dto.getUrl())
                 .altText(dto.getAltText())
                 .build();
@@ -49,7 +50,7 @@ public final class Mappers {
     public static ReviewImageResponse toResponse(ReviewImage entity) {
         return ReviewImageResponse.builder()
                 .id(entity.getId())
-                .reviewId(entity.getReview().getId())    // <--- obtener el ID del objeto
+                .reviewId(entity.getReview().getId())
                 .url(Optional.ofNullable(entity.getUrl()).orElse(""))
                 .altText(Optional.ofNullable(entity.getAltText()).orElse(""))
                 .build();
@@ -58,7 +59,7 @@ public final class Mappers {
     // ---------- REVIEW AUDIO ----------
     public static ReviewAudio toEntity(ReviewAudioRequest dto, Review review) {
         return ReviewAudio.builder()
-                .reviewId(review.getId())
+                .reviewId(review.getId()) // UUID solamente
                 .url(dto.getUrl())
                 .durationSeconds(dto.getDurationSeconds())
                 .transcription(dto.getTranscription())
@@ -84,11 +85,12 @@ public final class Mappers {
                 .parentId(entity.getParentId())
                 .content(entity.getContent())
                 .publishedAt(entity.getPublishedAt() != null
-                        ? OffsetDateTime.ofInstant(entity.getPublishedAt(), java.time.ZoneOffset.UTC)
+                        ? OffsetDateTime.ofInstant(entity.getPublishedAt(), ZoneOffset.UTC)
                         : null)
                 .build();
     }
 
+    // ---------- REVIEW COMMENT ANALYSIS ----------
     public static ReviewCommentAnalysisResponse toResponse(ReviewCommentAnalysis entity) {
         return ReviewCommentAnalysisResponse.builder()
                 .id(entity.getId())
@@ -100,10 +102,9 @@ public final class Mappers {
                 .keyPhrases(entity.getKeyPhrases())
                 .analyzedAt(
                         entity.getAnalyzedAt() != null
-                                ? OffsetDateTime.ofInstant(entity.getAnalyzedAt(), java.time.ZoneOffset.UTC)
+                                ? OffsetDateTime.ofInstant(entity.getAnalyzedAt(), ZoneOffset.UTC)
                                 : null
                 )
                 .build();
     }
-
 }
