@@ -1,24 +1,18 @@
-# ---- COMPILAR EL PROYECTO ----
-FROM maven:3.9.6-eclipse-temurin-23 AS builder
+# ---------- COMPILAR LA APP ----------
+FROM maven:3.9.6-eclipse-temurin-21 AS builder
 WORKDIR /app
 
-# Copiar archivos de proyecto
 COPY pom.xml .
+RUN mvn -e -X -U dependency:resolve dependency:resolve-plugins -DskipTests
+
 COPY src ./src
+RUN mvn -e -X -U -DskipTests clean package
 
-# Empaquetar (genera review.jar en /app/target)
-RUN mvn clean package -DskipTests
-
-# ---- RUNNER (IMAGEN FINAL) ----
-FROM eclipse-temurin:23-jre
+# ---------- EJECUTAR LA APP ----------
+FROM eclipse-temurin:21-jre
 
 WORKDIR /app
-
-# Copiamos el JAR al contenedor final
 COPY --from=builder /app/target/*.jar app.jar
 
-# Puerto que usará tu app (Render asigna automáticamente, pero debe exponerse)
-EXPOSE 8088
-
-# Comando de ejecución
+EXPOSE 8080
 ENTRYPOINT ["java", "-jar", "app.jar"]
