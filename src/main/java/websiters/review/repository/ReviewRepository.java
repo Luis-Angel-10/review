@@ -16,5 +16,5 @@ public interface ReviewRepository extends JpaRepository<Review, UUID> {
 
     List<Review> findByHasAudioTrue();
 
-    List<Review> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String t1, String t2);
+    List<Review> findByTitleContainingIgnoreCaseOrContentContainingIgnoreCase(String title, String content);
 }

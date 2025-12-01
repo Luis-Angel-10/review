@@ -9,10 +9,12 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "review_images")
-@Getter @Setter @NoArgsConstructor @AllArgsConstructor @Builder
+@Getter @Setter
+@NoArgsConstructor @AllArgsConstructor @Builder
 public class ReviewImage {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @JdbcTypeCode(SqlTypes.UUID)
     private UUID id;
 
@@ -24,9 +26,4 @@ public class ReviewImage {
     private String url;
 
     private String altText;
-
-    @PrePersist
-    public void prePersist() {
-        if (id == null) id = UUID.randomUUID();
-    }
 }
