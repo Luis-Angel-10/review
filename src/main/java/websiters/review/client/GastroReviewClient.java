@@ -11,9 +11,9 @@ import java.util.UUID;
 @FeignClient(name = "gastroreview")
 public interface GastroReviewClient {
 
-    @GetMapping("/gastroreview/users/{id}")
+    @GetMapping("/api/users/{id}")
     UserResponse getUser(@PathVariable @NotNull UUID id);
 
-    @GetMapping("/gastroreview/restaurants/{id}")
+    @GetMapping("/api/restaurants/{id}")
     RestaurantResponse getRestaurant(@PathVariable @NotNull UUID id);
 }
