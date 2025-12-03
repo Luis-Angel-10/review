@@ -9,7 +9,7 @@ import websiters.review.dto.RestaurantResponse;
 import java.util.UUID;
 
 @FeignClient(
-        name = "gastroreview",
+        name = "gastro-review",
         url = "${services.gastroreview.url}"
 )
 public interface GastroReviewClient {
