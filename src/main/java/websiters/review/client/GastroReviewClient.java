@@ -8,7 +8,10 @@ import websiters.review.dto.RestaurantResponse;
 
 import java.util.UUID;
 
-@FeignClient(name = "gastroreview")
+@FeignClient(
+        name = "gastroreview",
+        url = "${services.gastroreview.url}"
+)
 public interface GastroReviewClient {
 
     @GetMapping("/api/users/{id}")

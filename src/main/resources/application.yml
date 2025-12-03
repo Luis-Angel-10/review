@@ -42,3 +42,7 @@ eureka:
 azure:
   endpoint: ${AZURE_ENDPOINT}
   key: ${AZURE_KEY}
+
+services:
+  gastroreview:
+    url: https://apigateway-raml.onrender.com/gastroreview
