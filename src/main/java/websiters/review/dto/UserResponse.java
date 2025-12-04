@@ -6,7 +6,7 @@ import java.util.UUID;
 
 @Data
 public class UserResponse {
-    private UUID id;
+    private Long  id;
     private String email;
     private boolean active;
 }
